@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>CROSS LINK</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at top, #29200b 0%, #080808 48%),
+        #080808;
+      color: #f5f0e6;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 35px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      color: #d4af37;
+      text-shadow: 0 0 25px #d4af3755;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #a99b75;
+      font-size: 13px;
+      letter-spacing: 3px;
+      margin-bottom: 35px;
+    }
+
+    .panel {
+      border: 1px solid #8c702b;
+      background: #0d0d0de8;
+      border-radius: 22px;
+      padding: 30px 22px;
+      box-shadow: 0 0 35px #d4af3710;
+    }
+
+    h1 {
+      color: #e2c568;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #bdbdbd;
+      line-height: 2;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    button {
+      width: 100%;
+      border: 1px solid #d4af37;
+      border-radius: 12px;
+      padding: 15px;
+      background: linear-gradient(135deg, #d4af37, #8b6b1d);
+      color: #080808;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.25s;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px #d4af3744;
+    }
+
+    .secondary {
+      background: #101010;
+      color: #d4af37;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: #686868;
+      font-size: 11px;
+    }
+
+    .small {
+      font-size: 12px;
+      color: #777;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <div class="logo">CROSS LINK</div>
+    <div class="subtitle">ONE COMMUNITY • TWO PLATFORMS</div>
+
+    <section class="panel" id="welcome">
+      <h1>حيّاك الله</h1>
+
+      <p>
+        عالم يجمع لاعبين الدسكورد والبلايستيشن
+        في مكان واحد، بتجربة تواصل مختلفة.
+      </p>
+
+      <button onclick="showLogin()">
+        تسجيل الدخول
+      </button>
+    </section>
+
+    <section class="panel hidden" id="login">
+      <h1>اختر منصتك</h1>
+
+      <p>
+        اختر المنصة التي تبي تربط حسابك منها.
+      </p>
+
+      <button onclick="discordLogin()">
+        تسجيل دخول Discord
+      </button>
+
+      <button class="secondary" onclick="psnLogin()">
+        ربط حساب PlayStation
+      </button>
+
+      <button class="secondary" onclick="goBack()">
+        رجوع
+      </button>
+
+      <div class="small">
+        لن نطلب كلمة مرور حسابك من داخل الموقع.
+      </div>
+    </section>
+
+    <div class="footer">
+      CROSS LINK © 2026
+    </div>
+
+  </main>
+
+  <script>
+    function showLogin() {
+      document.getElementById("welcome")
+        .classList.add("hidden");
+
+      document.getElementById("login")
+        .classList.remove("hidden");
+    }
+
+    function goBack() {
+      document.getElementById("login")
+        .classList.add("hidden");
+
+      document.getElementById("welcome")
+        .classList.remove("hidden");
+    }
+
+    function discordLogin() {
+      alert("بنربط تسجيل دخول Discord الرسمي في الخطوة القادمة.");
+    }
+
+    function psnLogin() {
+      alert("بنضيف ربط حساب PlayStation بطريقة آمنة في الخطوة القادمة.");
+    }
+  </script>
+
+</body>
+</html>
