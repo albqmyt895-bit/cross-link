@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -16,9 +15,11 @@
 
     body {
       min-height: 100vh;
-      background:
-        radial-gradient(ellipse at top, #29200b 0%, #080808 48%),
-        #080808;
+      background: radial-gradient(
+        ellipse at top,
+        #29200b 0%,
+        #080808 48%
+      ), #080808;
       color: #f5f0e6;
       font-family: Arial, sans-serif;
       display: flex;
@@ -75,7 +76,11 @@
       border: 1px solid #d4af37;
       border-radius: 12px;
       padding: 15px;
-      background: linear-gradient(135deg, #d4af37, #8b6b1d);
+      background: linear-gradient(
+        135deg,
+        #d4af37,
+        #8b6b1d
+      );
       color: #080808;
       font-size: 16px;
       font-weight: bold;
@@ -87,6 +92,12 @@
     button:hover {
       transform: translateY(-2px);
       box-shadow: 0 0 20px #d4af3744;
+    }
+
+    button:disabled {
+      opacity: .65;
+      cursor: wait;
+      transform: none;
     }
 
     .secondary {
@@ -109,16 +120,32 @@
       color: #777;
       margin-top: 15px;
     }
+
+    .account-name {
+      color: #f0d080;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      color: #d4af37;
+      font-size: 13px;
+      margin-top: 14px;
+      line-height: 1.8;
+    }
   </style>
 </head>
 
 <body>
-
   <main class="container">
 
     <div class="logo">CROSS LINK</div>
-    <div class="subtitle">ONE COMMUNITY • TWO PLATFORMS</div>
 
+    <div class="subtitle">
+      ONE COMMUNITY • TWO PLATFORMS
+    </div>
+
+    <!-- الصفحة الرئيسية -->
     <section class="panel" id="welcome">
       <h1>حيّاك الله</h1>
 
@@ -132,6 +159,7 @@
       </button>
     </section>
 
+    <!-- صفحة تسجيل الدخول -->
     <section class="panel hidden" id="login">
       <h1>اختر منصتك</h1>
 
@@ -139,21 +167,68 @@
         اختر المنصة التي تبي تربط حسابك منها.
       </p>
 
-      <button onclick="discordLogin()">
+      <button
+        id="discordBtn"
+        onclick="discordLogin()"
+      >
         تسجيل دخول Discord
       </button>
 
-      <button class="secondary" onclick="psnLogin()">
+      <button
+        class="secondary"
+        onclick="psnLogin()"
+      >
         ربط حساب PlayStation
       </button>
 
-      <button class="secondary" onclick="goBack()">
+      <button
+        class="secondary"
+        onclick="goBack()"
+      >
         رجوع
       </button>
 
       <div class="small">
         لن نطلب كلمة مرور حسابك من داخل الموقع.
       </div>
+
+      <div
+        class="status"
+        id="loginStatus"
+        role="status"
+      ></div>
+    </section>
+
+    <!-- صفحة الحساب -->
+    <section class="panel hidden" id="account">
+      <h1>حسابك في CROSS LINK</h1>
+
+      <p>
+        تم تسجيل الدخول عبر Discord.
+      </p>
+
+      <div
+        class="account-name"
+        id="accountName"
+      ></div>
+
+      <div
+        class="small"
+        id="accountEmail"
+      ></div>
+
+      <button
+        class="secondary"
+        onclick="signOut()"
+      >
+        تسجيل الخروج
+      </button>
+
+      <div
+        class="status"
+        id="accountStatus"
+        role="status"
+      ></div>
     </section>
 
     <div class="footer">
@@ -162,31 +237,181 @@
 
   </main>
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
+    const SUPABASE_URL =
+      "https://vhbdbatqoskdhiuufopz.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_dBA_ZVEo5LkJHOq1AxZR_w_HlFJMtMR";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    // التنقل بين الصفحات
+    function showPage(pageId) {
+      ["welcome", "login", "account"].forEach(id => {
+        document
+          .getElementById(id)
+          .classList.toggle("hidden", id !== pageId);
+      });
+    }
+
+
+    // فتح صفحة تسجيل الدخول
     function showLogin() {
-      document.getElementById("welcome")
-        .classList.add("hidden");
-
-      document.getElementById("login")
-        .classList.remove("hidden");
+      showPage("login");
     }
 
+
+    // الرجوع للرئيسية
     function goBack() {
-      document.getElementById("login")
-        .classList.add("hidden");
-
-      document.getElementById("welcome")
-        .classList.remove("hidden");
+      showPage("welcome");
     }
 
-    function discordLogin() {
-      alert("بنربط تسجيل دخول Discord الرسمي في الخطوة القادمة.");
+
+    // تسجيل الدخول عبر Discord
+    async function discordLogin() {
+      const button =
+        document.getElementById("discordBtn");
+
+      const status =
+        document.getElementById("loginStatus");
+
+      button.disabled = true;
+
+      status.textContent =
+        "جاري تحويلك إلى Discord...";
+
+      try {
+        const { error } =
+          await supabaseClient.auth.signInWithOAuth({
+            provider: "discord",
+
+            options: {
+              redirectTo:
+                window.location.origin +
+                window.location.pathname
+            }
+          });
+
+        if (error) {
+          throw error;
+        }
+
+      } catch (error) {
+        status.textContent =
+          "تعذر بدء تسجيل الدخول. تأكد من إعداد Discord في Supabase.";
+
+        button.disabled = false;
+
+        console.error(
+          "Discord OAuth error:",
+          error
+        );
+      }
     }
 
+
+    // ربط PlayStation
     function psnLogin() {
-      alert("بنضيف ربط حساب PlayStation بطريقة آمنة في الخطوة القادمة.");
+      alert(
+        "ربط PlayStation غير مفعّل حالياً. لا تدخل كلمة مرور PSN في هذا الموقع."
+      );
     }
-  </script>
 
+
+    // عرض الحساب بعد تسجيل الدخول
+    function renderAccount(session) {
+      if (!session) {
+        showPage("welcome");
+        return;
+      }
+
+      const user = session.user;
+
+      const metadata =
+        user.user_metadata || {};
+
+      const name =
+        metadata.full_name ||
+        metadata.global_name ||
+        metadata.name ||
+        metadata.user_name ||
+        "مستخدم Discord";
+
+      document.getElementById(
+        "accountName"
+      ).textContent = name;
+
+      document.getElementById(
+        "accountEmail"
+      ).textContent = user.email || "";
+
+      showPage("account");
+    }
+
+
+    // تسجيل الخروج
+    async function signOut() {
+      const status =
+        document.getElementById("accountStatus");
+
+      status.textContent =
+        "جاري تسجيل الخروج...";
+
+      const { error } =
+        await supabaseClient.auth.signOut();
+
+      if (error) {
+        status.textContent =
+          "تعذر تسجيل الخروج. حاول مرة ثانية.";
+
+        console.error(
+          "Sign out error:",
+          error
+        );
+
+        return;
+      }
+
+      status.textContent = "";
+
+      showPage("welcome");
+    }
+
+
+    // التحقق من الجلسة الحالية
+    supabaseClient.auth
+      .getSession()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error(
+            "Session error:",
+            error
+          );
+
+          return;
+        }
+
+        renderAccount(data.session);
+      });
+
+
+    // متابعة تغيّر حالة تسجيل الدخول
+    supabaseClient.auth
+      .onAuthStateChange(
+        (_event, session) => {
+          renderAccount(session);
+        }
+      );
+
+  </script>
 </body>
 </html>
