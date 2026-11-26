@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -106,7 +107,7 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
     .footer {
@@ -132,6 +133,54 @@
       font-size: 13px;
       margin-top: 14px;
       line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .psn-input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #8c702b;
+      background: #080808;
+      color: #f5f0e6;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .psn-input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 12px #d4af3722;
+    }
+
+    .psn-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid #d4af37;
+      object-fit: cover;
+      margin: 18px auto 12px;
+      display: block;
+      background: #080808;
+    }
+
+    .psn-link {
+      display: block;
+      color: #d4af37;
+      margin-top: 12px;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .psn-link:hover {
+      text-decoration: underline;
+    }
+
+    .section-divider {
+      border: 0;
+      border-top: 1px solid #8c702b55;
+      margin: 25px 0;
     }
   </style>
 </head>
@@ -217,6 +266,71 @@
         id="accountEmail"
       ></div>
 
+      <hr class="section-divider">
+
+      <!-- ربط PlayStation -->
+      <h1 style="font-size:20px;">
+        ربط حساب PlayStation
+      </h1>
+
+      <p>
+        اكتب Online ID أو رابط ملفك العام في PlayStation.
+      </p>
+
+      <input
+        id="psnOnlineId"
+        class="psn-input"
+        type="text"
+        placeholder="Online ID أو رابط الملف"
+        autocomplete="off"
+        maxlength="300"
+      >
+
+      <button
+        id="psnBtn"
+        onclick="psnLogin()"
+      >
+        جلب حساب PlayStation
+      </button>
+
+      <div
+        id="psnProfile"
+        class="hidden"
+        style="margin-top:20px;"
+      >
+        <img
+          id="psnAvatar"
+          class="psn-avatar hidden"
+          alt="PSN Avatar"
+        >
+
+        <div
+          id="psnName"
+          class="account-name"
+        ></div>
+
+        <a
+          id="psnProfileLink"
+          class="psn-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          عرض ملف PlayStation
+        </a>
+      </div>
+
+      <div
+        id="psnStatus"
+        class="status"
+        role="status"
+      ></div>
+
+      <div class="small">
+        يتم جلب المعلومات العامة فقط. لا تدخل كلمة مرور PSN.
+      </div>
+
+      <hr class="section-divider">
+
       <button
         class="secondary"
         onclick="signOut()"
@@ -285,7 +399,6 @@
         document.getElementById("loginStatus");
 
       button.disabled = true;
-
       status.textContent =
         "جاري تحويلك إلى Discord...";
 
@@ -293,7 +406,6 @@
         const { error } =
           await supabaseClient.auth.signInWithOAuth({
             provider: "discord",
-
             options: {
               redirectTo:
                 window.location.origin +
@@ -319,11 +431,119 @@
     }
 
 
-    // ربط PlayStation
-    function psnLogin() {
-      alert(
-        "ربط PlayStation غير مفعّل حالياً. لا تدخل كلمة مرور PSN في هذا الموقع."
-      );
+    // جلب الملف العام من PlayStation
+    async function psnLogin() {
+      const input =
+        document.getElementById("psnOnlineId");
+
+      const button =
+        document.getElementById("psnBtn");
+
+      const status =
+        document.getElementById("psnStatus");
+
+      const onlineId =
+        input.value.trim();
+
+      if (!onlineId) {
+        status.textContent =
+          "اكتب Online ID أو رابط ملفك أولاً.";
+        return;
+      }
+
+      const { data: sessionData, error: sessionError } =
+        await supabaseClient.auth.getSession();
+
+      if (sessionError || !sessionData.session) {
+        status.textContent =
+          "سجّل دخولك عبر Discord أولاً.";
+        return;
+      }
+
+      button.disabled = true;
+
+      status.textContent =
+        "جاري البحث عن ملف PlayStation...";
+
+      try {
+        const { data, error } =
+          await supabaseClient.functions.invoke(
+            "psn-profile",
+            {
+              body: {
+                onlineId: onlineId
+              }
+            }
+          );
+
+        if (error) {
+          throw error;
+        }
+
+        if (!data || !data.onlineId) {
+          throw new Error(
+            "لم يتم العثور على الملف."
+          );
+        }
+
+        // عرض Online ID
+        document.getElementById(
+          "psnName"
+        ).textContent = data.onlineId;
+
+        // عرض الصورة إذا كانت متوفرة
+        const avatar =
+          document.getElementById("psnAvatar");
+
+        if (data.avatarUrl) {
+          avatar.src = data.avatarUrl;
+          avatar.classList.remove("hidden");
+        } else {
+          avatar.removeAttribute("src");
+          avatar.classList.add("hidden");
+        }
+
+        // رابط الملف العام
+        const profileLink =
+          document.getElementById("psnProfileLink");
+
+        profileLink.href = data.profileUrl;
+
+        document.getElementById(
+          "psnProfile"
+        ).classList.remove("hidden");
+
+        // حفظ بيانات PSN في حساب CROSS LINK
+        const { error: saveError } =
+          await supabaseClient.auth.updateUser({
+            data: {
+              psn_online_id: data.onlineId,
+              psn_avatar_url: data.avatarUrl || null,
+              psn_profile_url: data.profileUrl
+            }
+          });
+
+        if (saveError) {
+          console.error(
+            "PSN save error:",
+            saveError
+          );
+        }
+
+        status.textContent =
+          "تم جلب الملف العام بنجاح.";
+
+      } catch (error) {
+        console.error(
+          "PSN profile error:",
+          error
+        );
+
+        status.textContent =
+          "تعذر جلب الملف. تأكد من Online ID وأن الملف عام.";
+      } finally {
+        button.disabled = false;
+      }
     }
 
 
@@ -354,6 +574,47 @@
         "accountEmail"
       ).textContent = user.email || "";
 
+      // عرض بيانات PlayStation المحفوظة
+      const psnId =
+        metadata.psn_online_id;
+
+      const psnAvatar =
+        metadata.psn_avatar_url;
+
+      const psnUrl =
+        metadata.psn_profile_url;
+
+      if (psnId) {
+        document.getElementById(
+          "psnOnlineId"
+        ).value = psnId;
+
+        document.getElementById(
+          "psnName"
+        ).textContent = psnId;
+
+        const profileLink =
+          document.getElementById("psnProfileLink");
+
+        profileLink.href =
+          psnUrl || "#";
+
+        const avatar =
+          document.getElementById("psnAvatar");
+
+        if (psnAvatar) {
+          avatar.src = psnAvatar;
+          avatar.classList.remove("hidden");
+        } else {
+          avatar.removeAttribute("src");
+          avatar.classList.add("hidden");
+        }
+
+        document.getElementById(
+          "psnProfile"
+        ).classList.remove("hidden");
+      }
+
       showPage("account");
     }
 
@@ -382,7 +643,6 @@
       }
 
       status.textContent = "";
-
       showPage("welcome");
     }
 
