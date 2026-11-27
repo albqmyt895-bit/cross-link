@@ -1,677 +1,461 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080808">
-  <title>CROSS LINK</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      background: radial-gradient(
-        ellipse at top,
-        #29200b 0%,
-        #080808 48%
-      ), #080808;
-      color: #f5f0e6;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 430px;
-      text-align: center;
-    }
-
-    .logo {
-      font-size: 35px;
-      font-weight: 900;
-      letter-spacing: 5px;
-      color: #d4af37;
-      text-shadow: 0 0 25px #d4af3755;
-      margin-bottom: 12px;
-    }
-
-    .subtitle {
-      color: #a99b75;
-      font-size: 13px;
-      letter-spacing: 3px;
-      margin-bottom: 35px;
-    }
-
-    .panel {
-      border: 1px solid #8c702b;
-      background: #0d0d0de8;
-      border-radius: 22px;
-      padding: 30px 22px;
-      box-shadow: 0 0 35px #d4af3710;
-    }
-
-    h1 {
-      color: #e2c568;
-      font-size: 24px;
-      margin-bottom: 15px;
-    }
-
-    p {
-      color: #bdbdbd;
-      line-height: 2;
-      font-size: 14px;
-      margin-bottom: 25px;
-    }
-
-    button {
-      width: 100%;
-      border: 1px solid #d4af37;
-      border-radius: 12px;
-      padding: 15px;
-      background: linear-gradient(
-        135deg,
-        #d4af37,
-        #8b6b1d
-      );
-      color: #080808;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.25s;
-      margin-top: 12px;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px #d4af3744;
-    }
-
-    button:disabled {
-      opacity: .65;
-      cursor: wait;
-      transform: none;
-    }
-
-    .secondary {
-      background: #101010;
-      color: #d4af37;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .footer {
-      margin-top: 25px;
-      color: #686868;
-      font-size: 11px;
-    }
-
-    .small {
-      font-size: 12px;
-      color: #777;
-      margin-top: 15px;
-    }
-
-    .account-name {
-      color: #f0d080;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-
-    .status {
-      color: #d4af37;
-      font-size: 13px;
-      margin-top: 14px;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
-
-    .psn-input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #8c702b;
-      background: #080808;
-      color: #f5f0e6;
-      text-align: center;
-      margin-top: 10px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    .psn-input:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 12px #d4af3722;
-    }
-
-    .psn-avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 2px solid #d4af37;
-      object-fit: cover;
-      margin: 18px auto 12px;
-      display: block;
-      background: #080808;
-    }
-
-    .psn-link {
-      display: block;
-      color: #d4af37;
-      margin-top: 12px;
-      font-size: 13px;
-      text-decoration: none;
-    }
-
-    .psn-link:hover {
-      text-decoration: underline;
-    }
-
-    .section-divider {
-      border: 0;
-      border-top: 1px solid #8c702b55;
-      margin: 25px 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>CROSS LINK</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#d4af37;--gold2:#8c702b;--bg:#080808;--panel:#101010;--text:#f5f0e6;--muted:#aaa}
+body{min-height:100vh;background:radial-gradient(ellipse at top,#29200b 0%,#080808 48%),#080808;color:var(--text);font-family:Arial,sans-serif;padding:16px}
+button,input,textarea{font:inherit}
+button{border:1px solid var(--gold);border-radius:12px;padding:12px 14px;background:linear-gradient(135deg,#d4af37,#8b6b1d);color:#080808;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+button.secondary{background:#101010;color:var(--gold)}
+button.ghost{background:#080808;color:var(--gold)}
+input,textarea{width:100%;padding:13px;border:1px solid #6e5927;border-radius:12px;background:#080808;color:var(--text);outline:none}
+input:focus,textarea:focus{border-color:var(--gold)}
+.hidden{display:none!important}
+.wrap{max-width:1100px;margin:auto}
+.brand{text-align:center;color:var(--gold);font-size:30px;font-weight:900;letter-spacing:4px;text-shadow:0 0 22px #d4af3744;margin:12px 0 8px}
+.tagline{text-align:center;color:#a99b75;font-size:11px;letter-spacing:2px;margin-bottom:22px}
+.panel{border:1px solid var(--gold2);background:#0d0d0df0;border-radius:20px;padding:22px;box-shadow:0 0 30px #d4af3710}
+h1,h2,h3{color:#e2c568;margin-bottom:12px}
+p{color:#bdbdbd;line-height:1.8;margin:8px 0 16px}
+.stack{display:grid;gap:12px}
+.center{text-align:center}
+.status{color:var(--gold);font-size:13px;line-height:1.7;margin-top:12px;overflow-wrap:anywhere}
+.small{color:#888;font-size:12px;line-height:1.7}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.topbar button{width:auto;min-width:48px}
+.appgrid{display:grid;grid-template-columns: minmax(0,1fr);gap:14px}
+.menu{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.menu button{flex:1;min-width:110px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row{display:flex;align-items:center;gap:10px}
+.row>*{min-width:0}
+.avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid var(--gold2);background:#171717;flex-shrink:0}
+.avatar.big{width:76px;height:76px}
+.item{display:flex;align-items:center;gap:10px;border:1px solid #5e4c24;border-radius:14px;padding:10px;background:#090909;margin:8px 0}
+.item .details{flex:1;min-width:0}
+.item .details strong{display:block;overflow-wrap:anywhere;color:#f0d080}
+.item .details small{color:#999}
+.item button{width:auto;padding:9px 11px;margin:0;font-size:12px}
+.chatbox{height:48vh;min-height:280px;max-height:560px;overflow:auto;border:1px solid #4e401f;border-radius:14px;background:#080808;padding:12px;margin:12px 0}
+.msg{max-width:88%;margin:8px 0;padding:10px 12px;border-radius:14px;background:#171717;border:1px solid #39301a;overflow-wrap:anywhere}
+.msg.mine{margin-right:auto;background:#29200b;border-color:#8c702b}
+.msg small{display:block;color:#9b8b60;font-size:10px;margin-top:6px}
+.msg img{max-width:100%;border-radius:10px;margin-top:6px}
+.msg audio{width:100%;margin-top:6px}
+.composer{display:grid;grid-template-columns:1fr auto;gap:8px}
+.composer .tools{display:flex;gap:7px;grid-column:1/-1;flex-wrap:wrap}
+.composer button{width:auto}
+.person-list{max-height:42vh;overflow:auto}
+.profileline{display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0}
+.divider{border:0;border-top:1px solid #8c702b55;margin:18px 0}
+.badge{display:inline-block;border:1px solid #6e5927;color:var(--gold);border-radius:20px;padding:3px 8px;font-size:11px}
+@media(min-width:800px){.appgrid{grid-template-columns: minmax(0,1fr) 310px}.sidepanel{position:sticky;top:12px;align-self:start}.brand{font-size:34px}}
+@media(max-width:480px){body{padding:10px}.panel{padding:16px}.grid2{grid-template-columns:1fr}.brand{font-size:25px}.chatbox{height:42vh}}
+</style>
 </head>
-
 <body>
-  <main class="container">
+<div class="wrap">
+  <div class="brand">CROSS LINK</div>
+  <div class="tagline">ONE COMMUNITY • TWO PLATFORMS</div>
 
-    <div class="logo">CROSS LINK</div>
+  <section class="panel center" id="welcome">
+    <h1>حيّاك الله</h1>
+    <p>عالم يجمع لاعبين الدسكورد والبلايستيشن في مكان واحد، بتجربة تواصل مختلفة.</p>
+    <button onclick="showLogin()">تسجيل الدخول</button>
+  </section>
 
-    <div class="subtitle">
-      ONE COMMUNITY • TWO PLATFORMS
+  <section class="panel center hidden" id="login">
+    <h1>تسجيل الدخول</h1>
+    <p>سجّل دخولك عبر Discord للمتابعة.</p>
+    <button id="discordBtn" onclick="discordLogin()">تسجيل دخول Discord</button>
+    <button class="secondary" onclick="goBack()">رجوع</button>
+    <div class="small">لن نطلب كلمة مرور حسابك من داخل الموقع.</div>
+    <div class="status" id="loginStatus" role="status"></div>
+  </section>
+
+  <section class="hidden" id="app">
+    <div class="topbar">
+      <button class="secondary" onclick="togglePeople()" aria-label="الأصدقاء">♧ الأشخاص</button>
+      <span class="badge">متصل</span>
+      <button class="secondary" onclick="toggleMenu()" aria-label="القائمة">☰</button>
+    </div>
+    <div class="menu hidden" id="mainMenu">
+      <button class="secondary" onclick="showAppPage('home')">الرئيسية</button>
+      <button class="secondary" onclick="showAppPage('chat')">الشات</button>
+      <button class="secondary" onclick="showAppPage('calls')">المكالمة</button>
+      <button class="secondary" onclick="showAppPage('account')">حسابي</button>
+      <button class="secondary" onclick="signOut()">تسجيل الخروج</button>
     </div>
 
-    <!-- الصفحة الرئيسية -->
-    <section class="panel" id="welcome">
-      <h1>حيّاك الله</h1>
+    <div class="appgrid">
+      <main class="stack">
+        <section class="panel" id="page-home">
+          <h1>أهلًا بك في CROSS LINK</h1>
+          <p>ابدأ بالبحث عن أشخاص، أرسل طلب صداقة، وبعد قبول الطلب افتح محادثتك الخاصة.</p>
+          <div class="grid2">
+            <button onclick="togglePeople()">البحث عن أشخاص</button>
+            <button class="secondary" onclick="showAppPage('chat')">فتح الشات</button>
+          </div>
+          <div class="status" id="homeStatus"></div>
+        </section>
 
-      <p>
-        عالم يجمع لاعبين الدسكورد والبلايستيشن
-        في مكان واحد، بتجربة تواصل مختلفة.
-      </p>
+        <section class="panel hidden" id="page-chat">
+          <h1>الشات</h1>
+          <div class="small" id="chatPartner">اختر صديقًا من قائمة الأشخاص لبدء المحادثة.</div>
+          <div class="chatbox" id="messages" aria-live="polite"></div>
+          <div class="composer">
+            <input id="messageInput" placeholder="اكتب رسالتك..." maxlength="4000" autocomplete="off">
+            <button id="sendBtn" onclick="sendMessage()">إرسال</button>
+            <div class="tools">
+              <label class="secondary" style="border:1px solid #8c702b;border-radius:10px;padding:9px 12px;color:#d4af37;cursor:pointer">
+                صورة <input id="imageInput" type="file" accept="image/jpeg,image/png,image/webp" hidden onchange="sendImage(event)">
+              </label>
+              <button class="secondary" id="recordBtn" onclick="toggleRecording()">🎙 تسجيل صوتي</button>
+              <button class="secondary" onclick="showAppPage('calls')">دعوة للمكالمة</button>
+            </div>
+          </div>
+          <div class="status" id="chatStatus"></div>
+        </section>
 
-      <button onclick="showLogin()">
-        تسجيل الدخول
-      </button>
-    </section>
+        <section class="panel hidden" id="page-calls">
+          <h1>من تدعو للدردشة الصوتية؟</h1>
+          <p>اختر صديقًا لإرسال دعوة صوتية داخل المحادثة. المكالمة الصوتية المباشرة تحتاج إعداد اتصال WebRTC وخادم إشارة منفصل، ولم يتم تفعيلها في هذه النسخة.</p>
+          <div id="callFriends" class="person-list"></div>
+          <div class="status" id="callStatus"></div>
+        </section>
 
-    <!-- صفحة تسجيل الدخول -->
-    <section class="panel hidden" id="login">
-      <h1>اختر منصتك</h1>
+        <section class="panel hidden" id="page-account">
+          <h1>حسابي</h1>
+          <div class="profileline">
+            <img class="avatar big" id="accountAvatar" alt="Discord avatar">
+            <div style="text-align:right">
+              <div class="account-name" id="accountName"></div>
+              <div class="small" id="accountUsername"></div>
+            </div>
+          </div>
+          <div class="small" id="accountEmail"></div>
+          <hr class="divider">
+          <h2 style="font-size:19px">ربط حساب PlayStation</h2>
+          <p>اكتب Online ID أو رابط ملفك العام.</p>
+          <input id="psnOnlineId" placeholder="PSN Online ID أو رابط الملف" maxlength="300">
+          <button style="width:100%;margin-top:10px" id="psnBtn" onclick="psnLogin()">جلب حساب PlayStation</button>
+          <div id="psnProfile" class="hidden">
+            <div class="profileline">
+              <img class="avatar big" id="psnAvatar" alt="PSN avatar">
+              <strong id="psnName"></strong>
+            </div>
+            <a id="psnProfileLink" class="small" target="_blank" rel="noopener noreferrer" style="color:#d4af37">عرض ملف PlayStation</a>
+          </div>
+          <div class="status" id="psnStatus"></div>
+          <div class="status" id="accountStatus"></div>
+        </section>
+      </main>
 
-      <p>
-        اختر المنصة التي تبي تربط حسابك منها.
-      </p>
-
-      <button
-        id="discordBtn"
-        onclick="discordLogin()"
-      >
-        تسجيل دخول Discord
-      </button>
-
-      <button
-        class="secondary"
-        onclick="psnLogin()"
-      >
-        ربط حساب PlayStation
-      </button>
-
-      <button
-        class="secondary"
-        onclick="goBack()"
-      >
-        رجوع
-      </button>
-
-      <div class="small">
-        لن نطلب كلمة مرور حسابك من داخل الموقع.
-      </div>
-
-      <div
-        class="status"
-        id="loginStatus"
-        role="status"
-      ></div>
-    </section>
-
-    <!-- صفحة الحساب -->
-    <section class="panel hidden" id="account">
-      <h1>حسابك في CROSS LINK</h1>
-
-      <p>
-        تم تسجيل الدخول عبر Discord.
-      </p>
-
-      <div
-        class="account-name"
-        id="accountName"
-      ></div>
-
-      <div
-        class="small"
-        id="accountEmail"
-      ></div>
-
-      <hr class="section-divider">
-
-      <!-- ربط PlayStation -->
-      <h1 style="font-size:20px;">
-        ربط حساب PlayStation
-      </h1>
-
-      <p>
-        اكتب Online ID أو رابط ملفك العام في PlayStation.
-      </p>
-
-      <input
-        id="psnOnlineId"
-        class="psn-input"
-        type="text"
-        placeholder="Online ID أو رابط الملف"
-        autocomplete="off"
-        maxlength="300"
-      >
-
-      <button
-        id="psnBtn"
-        onclick="psnLogin()"
-      >
-        جلب حساب PlayStation
-      </button>
-
-      <div
-        id="psnProfile"
-        class="hidden"
-        style="margin-top:20px;"
-      >
-        <img
-          id="psnAvatar"
-          class="psn-avatar hidden"
-          alt="PSN Avatar"
-        >
-
-        <div
-          id="psnName"
-          class="account-name"
-        ></div>
-
-        <a
-          id="psnProfileLink"
-          class="psn-link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          عرض ملف PlayStation
-        </a>
-      </div>
-
-      <div
-        id="psnStatus"
-        class="status"
-        role="status"
-      ></div>
-
-      <div class="small">
-        يتم جلب المعلومات العامة فقط. لا تدخل كلمة مرور PSN.
-      </div>
-
-      <hr class="section-divider">
-
-      <button
-        class="secondary"
-        onclick="signOut()"
-      >
-        تسجيل الخروج
-      </button>
-
-      <div
-        class="status"
-        id="accountStatus"
-        role="status"
-      ></div>
-    </section>
-
-    <div class="footer">
-      CROSS LINK © 2026
+      <aside class="sidepanel">
+        <section class="panel hidden" id="peoplePanel">
+          <h2>الأشخاص</h2>
+          <input id="peopleSearch" placeholder="ابحث بالاسم أو PSN ID" oninput="searchPeople()">
+          <div class="small" style="margin-top:8px">نتائج البحث</div>
+          <div id="searchResults" class="person-list"></div>
+          <hr class="divider">
+          <h3>طلبات الصداقة</h3>
+          <div id="incomingRequests" class="person-list"></div>
+          <hr class="divider">
+          <h3>أصدقائي <span class="badge" id="friendCount">0</span></h3>
+          <div id="friendsList" class="person-list"></div>
+          <div class="status" id="peopleStatus"></div>
+        </section>
+        <section class="panel" id="sideHome">
+          <h2>حسابك</h2>
+          <div class="row">
+            <img class="avatar" id="miniAvatar" alt="">
+            <div class="details">
+              <strong id="miniName">مستخدم CROSS LINK</strong>
+              <small>Discord</small>
+            </div>
+          </div>
+          <button class="secondary" style="width:100%;margin-top:12px" onclick="togglePeople()">الأصدقاء والبحث</button>
+        </section>
+      </aside>
     </div>
+  </section>
+  <div class="small center" style="margin:20px 0">CROSS LINK © 2026</div>
+</div>
 
-  </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://vhbdbatqoskdhiuufopz.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_dBA_ZVEo5LkJHOq1AxZR_w_HlFJMtMR";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+let currentUser=null,currentSession=null,friends=[],activeConversation=null,activeFriend=null,messageChannel=null,presenceChannel=null,recorder=null,recordChunks=[],onlineIds=new Set(),searchTimer=null;
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+function $(id){return document.getElementById(id)}
+function showPage(id){["welcome","login","app"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
+function showLogin(){showPage("login")}
+function goBack(){showPage("welcome")}
+function setStatus(id,msg){$(id).textContent=msg||""}
+function toggleMenu(){$("mainMenu").classList.toggle("hidden")}
+function togglePeople(){
+  $("peoplePanel").classList.toggle("hidden");
+  if(!$("peoplePanel").classList.contains("hidden")) loadPeoplePanel();
+}
+function showAppPage(page){
+  ["home","chat","calls","account"].forEach(x=>$("page-"+x).classList.toggle("hidden",x!==page));
+  $("mainMenu").classList.add("hidden");
+  if(page==="calls")renderCallFriends();
+}
+function safeText(el,value){el.textContent=value||""}
+function avatarUrl(profile){return profile?.avatar_url||""}
+function userName(profile){return profile?.display_name||profile?.username||"مستخدم"}
+function setAvatar(img,url){if(url){img.src=url;img.classList.remove("hidden")}else{img.removeAttribute("src");img.classList.add("hidden")}}
 
-  <script>
-    const SUPABASE_URL =
-      "https://vhbdbatqoskdhiuufopz.supabase.co";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_dBA_ZVEo5LkJHOq1AxZR_w_HlFJMtMR";
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
-
-
-    // التنقل بين الصفحات
-    function showPage(pageId) {
-      ["welcome", "login", "account"].forEach(id => {
-        document
-          .getElementById(id)
-          .classList.toggle("hidden", id !== pageId);
-      });
+async function discordLogin(){
+  $("discordBtn").disabled=true;setStatus("loginStatus","جاري تحويلك إلى Discord...");
+  try{
+    const {error}=await supabaseClient.auth.signInWithOAuth({provider:"discord",options:{redirectTo:location.origin+location.pathname}});
+    if(error)throw error;
+  }catch(e){setStatus("loginStatus","تعذر بدء تسجيل الدخول. تحقق من إعداد Discord في Supabase.");console.error(e);$("discordBtn").disabled=false}
+}
+async function renderSession(session){
+  currentSession=session;currentUser=session?.user||null;
+  if(!currentUser){showPage(location.hash.includes("access_token")?"login":"welcome");return}
+  showPage("app");
+  const meta=currentUser.user_metadata||{};
+  const name=meta.global_name||meta.full_name||meta.name||meta.user_name||"مستخدم Discord";
+  const username=meta.user_name||meta.username||"";
+  const avatar=meta.avatar_url||meta.picture||"";
+  safeText($("accountName"),name);safeText($("accountUsername"),username?("@"+username):"");
+  safeText($("accountEmail"),currentUser.email||"");
+  safeText($("miniName"),name);setAvatar($("accountAvatar"),avatar);setAvatar($("miniAvatar"),avatar);
+  try{
+    const {error}=await supabaseClient.from("profiles").upsert({
+      id:currentUser.id,username:username||name,display_name:name,avatar_url:avatar||null,platform:"discord",is_online:true,last_seen:new Date().toISOString()
+    },{onConflict:"id"});
+    if(error)console.warn("Profile sync:",error.message);
+  }catch(e){console.warn(e)}
+  if(meta.psn_online_id){$("psnOnlineId").value=meta.psn_online_id;$("psnName").textContent=meta.psn_online_id;setAvatar($("psnAvatar"),meta.psn_avatar_url);$("psnProfileLink").href=meta.psn_profile_url||"#";$("psnProfile").classList.remove("hidden")}
+  await startPresence();
+  await loadFriends();
+  await loadIncomingRequests();
+}
+async function signOut(){
+  if(currentUser){
+    await supabaseClient.from("profiles").update({is_online:false,last_seen:new Date().toISOString()}).eq("id",currentUser.id);
+  }
+  if(presenceChannel)await supabaseClient.removeChannel(presenceChannel);
+  if(messageChannel)await supabaseClient.removeChannel(messageChannel);
+  const {error}=await supabaseClient.auth.signOut();
+  if(error){setStatus("accountStatus","تعذر تسجيل الخروج.");return}
+  currentUser=null;currentSession=null;activeConversation=null;activeFriend=null;showPage("welcome");
+}
+async function startPresence(){
+  if(presenceChannel)await supabaseClient.removeChannel(presenceChannel);
+  presenceChannel=supabaseClient.channel("cross-link-presence",{config:{presence:{key:currentUser.id}}});
+  presenceChannel.on("presence",{event:"sync"},()=>{onlineIds=new Set(Object.keys(presenceChannel.presenceState()));renderFriends()});
+  presenceChannel.subscribe(async status=>{
+    if(status==="SUBSCRIBED"){
+      await presenceChannel.track({user_id:currentUser.id,name:$("miniName").textContent,online_at:new Date().toISOString()});
+      onlineIds.add(currentUser.id);renderFriends();
     }
-
-
-    // فتح صفحة تسجيل الدخول
-    function showLogin() {
-      showPage("login");
-    }
-
-
-    // الرجوع للرئيسية
-    function goBack() {
-      showPage("welcome");
-    }
-
-
-    // تسجيل الدخول عبر Discord
-    async function discordLogin() {
-      const button =
-        document.getElementById("discordBtn");
-
-      const status =
-        document.getElementById("loginStatus");
-
-      button.disabled = true;
-      status.textContent =
-        "جاري تحويلك إلى Discord...";
-
-      try {
-        const { error } =
-          await supabaseClient.auth.signInWithOAuth({
-            provider: "discord",
-            options: {
-              redirectTo:
-                window.location.origin +
-                window.location.pathname
-            }
-          });
-
-        if (error) {
-          throw error;
-        }
-
-      } catch (error) {
-        status.textContent =
-          "تعذر بدء تسجيل الدخول. تأكد من إعداد Discord في Supabase.";
-
-        button.disabled = false;
-
-        console.error(
-          "Discord OAuth error:",
-          error
-        );
-      }
-    }
-
-
-    // جلب الملف العام من PlayStation
-    async function psnLogin() {
-      const input =
-        document.getElementById("psnOnlineId");
-
-      const button =
-        document.getElementById("psnBtn");
-
-      const status =
-        document.getElementById("psnStatus");
-
-      const onlineId =
-        input.value.trim();
-
-      if (!onlineId) {
-        status.textContent =
-          "اكتب Online ID أو رابط ملفك أولاً.";
-        return;
-      }
-
-      const { data: sessionData, error: sessionError } =
-        await supabaseClient.auth.getSession();
-
-      if (sessionError || !sessionData.session) {
-        status.textContent =
-          "سجّل دخولك عبر Discord أولاً.";
-        return;
-      }
-
-      button.disabled = true;
-
-      status.textContent =
-        "جاري البحث عن ملف PlayStation...";
-
-      try {
-        const { data, error } =
-          await supabaseClient.functions.invoke(
-            "psn-profile",
-            {
-              body: {
-                onlineId: onlineId
-              }
-            }
-          );
-
-        if (error) {
-          throw error;
-        }
-
-        if (!data || !data.onlineId) {
-          throw new Error(
-            "لم يتم العثور على الملف."
-          );
-        }
-
-        // عرض Online ID
-        document.getElementById(
-          "psnName"
-        ).textContent = data.onlineId;
-
-        // عرض الصورة إذا كانت متوفرة
-        const avatar =
-          document.getElementById("psnAvatar");
-
-        if (data.avatarUrl) {
-          avatar.src = data.avatarUrl;
-          avatar.classList.remove("hidden");
-        } else {
-          avatar.removeAttribute("src");
-          avatar.classList.add("hidden");
-        }
-
-        // رابط الملف العام
-        const profileLink =
-          document.getElementById("psnProfileLink");
-
-        profileLink.href = data.profileUrl;
-
-        document.getElementById(
-          "psnProfile"
-        ).classList.remove("hidden");
-
-        // حفظ بيانات PSN في حساب CROSS LINK
-        const { error: saveError } =
-          await supabaseClient.auth.updateUser({
-            data: {
-              psn_online_id: data.onlineId,
-              psn_avatar_url: data.avatarUrl || null,
-              psn_profile_url: data.profileUrl
-            }
-          });
-
-        if (saveError) {
-          console.error(
-            "PSN save error:",
-            saveError
-          );
-        }
-
-        status.textContent =
-          "تم جلب الملف العام بنجاح.";
-
-      } catch (error) {
-        console.error(
-          "PSN profile error:",
-          error
-        );
-
-        status.textContent =
-          "تعذر جلب الملف. تأكد من Online ID وأن الملف عام.";
-      } finally {
-        button.disabled = false;
-      }
-    }
-
-
-    // عرض الحساب بعد تسجيل الدخول
-    function renderAccount(session) {
-      if (!session) {
-        showPage("welcome");
-        return;
-      }
-
-      const user = session.user;
-
-      const metadata =
-        user.user_metadata || {};
-
-      const name =
-        metadata.full_name ||
-        metadata.global_name ||
-        metadata.name ||
-        metadata.user_name ||
-        "مستخدم Discord";
-
-      document.getElementById(
-        "accountName"
-      ).textContent = name;
-
-      document.getElementById(
-        "accountEmail"
-      ).textContent = user.email || "";
-
-      // عرض بيانات PlayStation المحفوظة
-      const psnId =
-        metadata.psn_online_id;
-
-      const psnAvatar =
-        metadata.psn_avatar_url;
-
-      const psnUrl =
-        metadata.psn_profile_url;
-
-      if (psnId) {
-        document.getElementById(
-          "psnOnlineId"
-        ).value = psnId;
-
-        document.getElementById(
-          "psnName"
-        ).textContent = psnId;
-
-        const profileLink =
-          document.getElementById("psnProfileLink");
-
-        profileLink.href =
-          psnUrl || "#";
-
-        const avatar =
-          document.getElementById("psnAvatar");
-
-        if (psnAvatar) {
-          avatar.src = psnAvatar;
-          avatar.classList.remove("hidden");
-        } else {
-          avatar.removeAttribute("src");
-          avatar.classList.add("hidden");
-        }
-
-        document.getElementById(
-          "psnProfile"
-        ).classList.remove("hidden");
-      }
-
-      showPage("account");
-    }
-
-
-    // تسجيل الخروج
-    async function signOut() {
-      const status =
-        document.getElementById("accountStatus");
-
-      status.textContent =
-        "جاري تسجيل الخروج...";
-
-      const { error } =
-        await supabaseClient.auth.signOut();
-
-      if (error) {
-        status.textContent =
-          "تعذر تسجيل الخروج. حاول مرة ثانية.";
-
-        console.error(
-          "Sign out error:",
-          error
-        );
-
-        return;
-      }
-
-      status.textContent = "";
-      showPage("welcome");
-    }
-
-
-    // التحقق من الجلسة الحالية
-    supabaseClient.auth
-      .getSession()
-      .then(({ data, error }) => {
-        if (error) {
-          console.error(
-            "Session error:",
-            error
-          );
-
-          return;
-        }
-
-        renderAccount(data.session);
-      });
-
-
-    // متابعة تغيّر حالة تسجيل الدخول
-    supabaseClient.auth
-      .onAuthStateChange(
-        (_event, session) => {
-          renderAccount(session);
-        }
-      );
-
-  </script>
+  });
+}
+async function loadFriends(){
+  if(!currentUser)return;
+  const {data,error}=await supabaseClient.from("friendships").select("friend_id").eq("user_id",currentUser.id);
+  if(error){setStatus("peopleStatus","تعذر تحميل الأصدقاء: "+error.message);return}
+  const ids=[...new Set((data||[]).map(x=>x.friend_id).filter(Boolean))];
+  if(!ids.length){friends=[];renderFriends();renderCallFriends();return}
+  const {data:profiles,error:pErr}=await supabaseClient.from("profiles").select("id,username,display_name,avatar_url,platform,is_online,last_seen").in("id",ids);
+  if(pErr){setStatus("peopleStatus","تعذر جلب ملفات الأصدقاء.");return}
+  friends=profiles||[];renderFriends();renderCallFriends();
+}
+function personItem(profile,buttonText,handler,extra=""){
+  const item=document.createElement("div");item.className="item";
+  const img=document.createElement("img");img.className="avatar";img.alt="";setAvatar(img,profile.avatar_url);
+  const details=document.createElement("div");details.className="details";
+  const strong=document.createElement("strong");strong.textContent=userName(profile);
+  const small=document.createElement("small");small.textContent=extra||(onlineIds.has(profile.id)?"متصل":"غير متصل");
+  details.append(strong,small);item.append(img,details);
+  if(buttonText){const btn=document.createElement("button");btn.textContent=buttonText;btn.onclick=handler;item.append(btn)}
+  return item;
+}
+function renderFriends(){
+  $("friendCount").textContent=friends.length;
+  $("friendsList").replaceChildren();
+  if(!friends.length){$("friendsList").textContent="ما عندك أصدقاء مضافين للحين.";return}
+  friends.forEach(f=>$("friendsList").append(personItem(f,"الشات",()=>openConversation(f))));
+}
+function renderCallFriends(){
+  $("callFriends").replaceChildren();
+  if(!friends.length){$("callFriends").textContent="أضف أصدقاء أولًا.";return}
+  friends.forEach(f=>$("callFriends").append(personItem(f,"إرسال دعوة",()=>sendCallInvite(f))));
+}
+async function loadPeoplePanel(){await loadFriends();await loadIncomingRequests();searchPeople()}
+async function searchPeople(){
+  clearTimeout(searchTimer);
+  const q=$("peopleSearch").value.trim();
+  if(q.length<2){$("searchResults").textContent="اكتب حرفين على الأقل للبحث.";return}
+  searchTimer=setTimeout(async()=>{
+    const {data,error}=await supabaseClient.from("profiles").select("id,username,display_name,avatar_url,platform,is_online,last_seen").or(`display_name.ilike.%${q.replace(/[%_]/g,"\\$&")}%,username.ilike.%${q.replace(/[%_]/g,"\\$&")}%`).neq("id",currentUser.id).limit(20);
+    if(error){$("searchResults").textContent="تعذر البحث.";return}
+    $("searchResults").replaceChildren();
+    const existing=new Set(friends.map(f=>f.id));
+    (data||[]).forEach(p=>{
+      if(existing.has(p.id))return;
+      $("searchResults").append(personItem(p,"إضافة",()=>sendFriendRequest(p)));
+    });
+    if(!(data||[]).length)$("searchResults").textContent="ما لقينا نتائج.";
+  },250);
+}
+async function sendFriendRequest(profile){
+  setStatus("peopleStatus","جاري إرسال طلب الصداقة...");
+  const {error}=await supabaseClient.from("friend_requests").insert({sender_id:currentUser.id,receiver_id:profile.id,status:"pending"});
+  if(error){setStatus("peopleStatus",error.code==="23505"?"طلب الصداقة موجود مسبقًا.":"تعذر إرسال الطلب: "+error.message);return}
+  setStatus("peopleStatus","تم إرسال طلب الصداقة.");
+}
+async function loadIncomingRequests(){
+  if(!currentUser)return;
+  const {data,error}=await supabaseClient.from("friend_requests").select("id,sender_id,status,created_at").eq("receiver_id",currentUser.id).eq("status","pending").order("created_at",{ascending:false});
+  if(error){$("incomingRequests").textContent="تعذر تحميل الطلبات.";return}
+  $("incomingRequests").replaceChildren();
+  for(const req of data||[]){
+    const {data:profile}=await supabaseClient.from("profiles").select("id,username,display_name,avatar_url,is_online").eq("id",req.sender_id).maybeSingle();
+    if(!profile)continue;
+    const item=personItem(profile,"قبول",()=>acceptRequest(req.id));
+    const reject=document.createElement("button");reject.className="secondary";reject.textContent="رفض";reject.onclick=()=>rejectRequest(req.id);
+    item.append(reject);$("incomingRequests").append(item);
+  }
+  if(!(data||[]).length)$("incomingRequests").textContent="ما عندك طلبات واردة.";
+}
+async function acceptRequest(id){
+  setStatus("peopleStatus","جاري قبول الطلب...");
+  const {data,error}=await supabaseClient.rpc("accept_friend_request",{request_id:id});
+  if(error){setStatus("peopleStatus","تعذر قبول الطلب: "+error.message);return}
+  setStatus("peopleStatus","تم قبول طلب الصداقة.");await loadFriends();await loadIncomingRequests();
+}
+async function rejectRequest(id){
+  const {error}=await supabaseClient.from("friend_requests").update({status:"rejected"}).eq("id",id).eq("receiver_id",currentUser.id).eq("status","pending");
+  if(error){setStatus("peopleStatus","تعذر رفض الطلب.");return}
+  await loadIncomingRequests();setStatus("peopleStatus","تم رفض الطلب.");
+}
+async function openConversation(friend){
+  activeFriend=friend;setStatus("chatStatus","جاري فتح المحادثة...");
+  showAppPage("chat");safeText($("chatPartner"),"المحادثة مع "+userName(friend));
+  const {data,error}=await supabaseClient.rpc("get_or_create_direct_conversation",{friend_user_id:friend.id});
+  if(error){setStatus("chatStatus","تعذر فتح المحادثة: "+error.message);return}
+  activeConversation=data;await loadMessages();subscribeMessages();setStatus("chatStatus","");
+}
+async function loadMessages(){
+  if(!activeConversation)return;
+  const {data,error}=await supabaseClient.from("messages").select("id,conversation_id,sender_id,content,image_url,voice_url,created_at").eq("conversation_id",activeConversation).is("deleted_at",null).order("created_at",{ascending:true}).limit(100);
+  if(error){setStatus("chatStatus","تعذر تحميل الرسائل: "+error.message);return}
+  $("messages").replaceChildren();(data||[]).forEach(renderMessage);$("messages").scrollTop=$("messages").scrollHeight;
+}
+function renderMessage(m){
+  const box=document.createElement("div");box.className="msg"+(m.sender_id===currentUser.id?" mine":"");
+  if(m.content){const text=document.createElement("div");text.textContent=m.content;box.append(text)}
+  if(m.image_url){const img=document.createElement("img");img.src=m.image_url;img.alt="صورة مرسلة";img.loading="lazy";box.append(img)}
+  if(m.voice_url){const audio=document.createElement("audio");audio.controls=true;audio.src=m.voice_url;box.append(audio)}
+  const time=document.createElement("small");time.textContent=new Date(m.created_at).toLocaleString("ar-SA");box.append(time);
+  box.dataset.id=m.id;$("messages").append(box);
+}
+async function sendMessage(){
+  const input=$("messageInput"),content=input.value.trim();
+  if(!content||!activeConversation){setStatus("chatStatus","اختر صديقًا أولًا واكتب رسالة.");return}
+  $("sendBtn").disabled=true;
+  const {error}=await supabaseClient.from("messages").insert({conversation_id:activeConversation,sender_id:currentUser.id,content});
+  $("sendBtn").disabled=false;
+  if(error){setStatus("chatStatus","تعذر إرسال الرسالة: "+error.message);return}
+  input.value="";setStatus("chatStatus","");
+}
+function subscribeMessages(){
+  if(messageChannel)supabaseClient.removeChannel(messageChannel);
+  messageChannel=supabaseClient.channel("messages-"+activeConversation);
+  messageChannel.on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"conversation_id=eq."+activeConversation},payload=>{
+    if(!$("messages").querySelector(`[data-id="${payload.new.id}"]`)){renderMessage(payload.new);$("messages").scrollTop=$("messages").scrollHeight}
+  }).subscribe();
+}
+async function uploadMedia(file,kind){
+  if(!activeConversation)throw new Error("اختر محادثة أولًا");
+  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_")||kind;
+  const path=`${currentUser.id}/${activeConversation}/${Date.now()}-${safeName}`;
+  const {error:uploadError}=await supabaseClient.storage.from("cross-link-media").upload(path,file,{contentType:file.type,upsert:false});
+  if(uploadError)throw uploadError;
+  // رابط موقّع؛ سيحتاج إنشاء رابط جديد بعد انتهاء مدته.
+  const {data,error}=await supabaseClient.storage.from("cross-link-media").createSignedUrl(path,604800);
+  if(error)throw error;
+  return data.signedUrl;
+}
+async function sendImage(event){
+  const file=event.target.files?.[0];event.target.value="";
+  if(!file)return;
+  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){setStatus("chatStatus","الصور المدعومة JPG وPNG وWEBP فقط.");return}
+  if(file.size>25*1024*1024){setStatus("chatStatus","حجم الصورة أكبر من 25 MB.");return}
+  try{
+    setStatus("chatStatus","جاري رفع الصورة...");
+    const url=await uploadMedia(file,"image");
+    const {error}=await supabaseClient.from("messages").insert({conversation_id:activeConversation,sender_id:currentUser.id,image_url:url,content:""});
+    if(error)throw error;setStatus("chatStatus","");
+  }catch(e){setStatus("chatStatus","تعذر رفع الصورة: "+e.message)}
+}
+async function toggleRecording(){
+  if(!activeConversation){setStatus("chatStatus","اختر صديقًا أولًا.");return}
+  if(recorder&&recorder.state==="recording"){recorder.stop();$("recordBtn").textContent="🎙 تسجيل صوتي";return}
+  if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){setStatus("chatStatus","متصفحك لا يدعم التسجيل الصوتي.");return}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const mime=MediaRecorder.isTypeSupported("audio/webm")?"audio/webm":"";
+    recorder=new MediaRecorder(stream,mime?{mimeType:mime}:{});
+    recordChunks=[];
+    recorder.ondataavailable=e=>{if(e.data.size)recordChunks.push(e.data)};
+    recorder.onstop=async()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      const blob=new Blob(recordChunks,{type:recorder.mimeType||"audio/webm"});
+      try{
+        setStatus("chatStatus","جاري رفع التسجيل...");
+        const file=new File([blob],`voice-${Date.now()}.webm`,{type:blob.type});
+        const url=await uploadMedia(file,"voice");
+        const {error}=await supabaseClient.from("messages").insert({conversation_id:activeConversation,sender_id:currentUser.id,voice_url:url,content:""});
+        if(error)throw error;setStatus("chatStatus","");
+      }catch(e){setStatus("chatStatus","تعذر إرسال التسجيل: "+e.message)}
+    };
+    recorder.start();$("recordBtn").textContent="إيقاف التسجيل";
+    setStatus("chatStatus","التسجيل يعمل؛ اضغط إيقاف لإرساله.");
+  }catch(e){setStatus("chatStatus","لم يتم السماح باستخدام الميكروفون أو تعذر تشغيله.")}
+}
+async function sendCallInvite(friend){
+  const {data,error}=await supabaseClient.rpc("get_or_create_direct_conversation",{friend_user_id:friend.id});
+  if(error){setStatus("callStatus","تعذر فتح المحادثة: "+error.message);return}
+  const {error:sendError}=await supabaseClient.from("messages").insert({conversation_id:data,sender_id:currentUser.id,content:"🎙️ يدعوك إلى الدردشة الصوتية. افتح CROSS LINK للتواصل."});
+  if(sendError){setStatus("callStatus","تعذر إرسال الدعوة: "+sendError.message);return}
+  setStatus("callStatus","تم إرسال دعوة صوتية إلى "+userName(friend)+".");
+}
+async function psnLogin(){
+  const onlineId=$("psnOnlineId").value.trim();
+  if(!onlineId){setStatus("psnStatus","اكتب Online ID أو رابط الملف أولًا.");return}
+  if(!currentSession){setStatus("psnStatus","سجّل دخولك عبر Discord أولًا.");return}
+  $("psnBtn").disabled=true;setStatus("psnStatus","جاري البحث عن ملف PlayStation...");
+  try{
+    const {data,error}=await supabaseClient.functions.invoke("psn-profile",{body:{onlineId}});
+    if(error)throw error;if(!data?.onlineId)throw new Error("لم يتم العثور على الملف");
+    $("psnName").textContent=data.onlineId;$("psnProfileLink").href=data.profileUrl||"#";setAvatar($("psnAvatar"),data.avatarUrl);$("psnProfile").classList.remove("hidden");
+    const {error:saveError}=await supabaseClient.auth.updateUser({data:{psn_online_id:data.onlineId,psn_avatar_url:data.avatarUrl||null,psn_profile_url:data.profileUrl}});
+    if(saveError)throw saveError;
+    // تحديث الاسم الظاهر في ملف CROSS LINK للبحث بواسطة PSN ID
+    await supabaseClient.from("profiles").update({username:data.onlineId,platform:"playstation"}).eq("id",currentUser.id);
+    setStatus("psnStatus","تم جلب وربط الملف العام.");
+  }catch(e){console.error(e);setStatus("psnStatus","تعذر جلب الملف. تحقق من Online ID وأن الملف عام.")}
+  finally{$("psnBtn").disabled=false}
+}
+$("messageInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
+supabaseClient.auth.getSession().then(({data,error})=>{if(error)console.error(error);renderSession(data?.session||null)});
+supabaseClient.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>renderSession(session),0)});
+</script>
 </body>
 </html>
